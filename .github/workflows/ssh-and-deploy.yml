@@ -12,9 +12,9 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            cd jautoconsom-trpc 
+            cd meteo-toulouse-api 
             git pull 
-            sudo docker stop jautoconsom-trpc || true && sudo docker rm jautoconsom-trpc || true
+            sudo docker stop meteo-toulouse-api || true && sudo docker rm meteo-toulouse-api || true
             cd ./server
-            sudo docker image build -t jautoconsom-trpc .
-            sudo docker container run --name jautoconsom-trpc -d -p ${{ secrets.PORT }}:3000 -v /root/jautoconsom-trpc/server/.env:/app/.env jautoconsom-trpc
+            sudo docker image build -t meteo-toulouse-api .
+            sudo docker container run --name meteo-toulouse-api -d -p ${{ secrets.PORT }}:3000 -v /root/meteo-toulouse-api/server/.env:/app/.env meteo-toulouse-api
