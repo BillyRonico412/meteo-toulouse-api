@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "await-to-js": "^3.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.4.1",
+    "@types/cors": "^2.8.17",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.21",
+    "@types/morgan": "^1.9.9"
+  },
+  "name": "meteo-toulouse-api",
+  "description": "\"Salut la team du Master 2 SDL à l'Univ Paul Sabatier! 🎓 J'avais ce cours sur le Développement Orienté Plateforme, et on devait récupérer des infos météo pour Toulouse. J'ai trouvé une [API](https://api.meteo-concept.com/) qui faisait le boulot, mais le hic, c'est qu'ils offraient seulement 500 requêtes gratuites par jour. 😅",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.ts",
+    "prod": "ts-node index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
