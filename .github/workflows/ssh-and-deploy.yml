@@ -1,0 +1,20 @@
+name: remote ssh command
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd jautoconsom-trpc 
+            git pull 
+            sudo docker stop jautoconsom-trpc || true && sudo docker rm jautoconsom-trpc || true
+            cd ./server
+            sudo docker image build -t jautoconsom-trpc .
+            sudo docker container run --name jautoconsom-trpc -d -p ${{ secrets.PORT }}:3000 -v /root/jautoconsom-trpc/server/.env:/app/.env jautoconsom-trpc
