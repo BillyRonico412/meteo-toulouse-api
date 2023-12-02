@@ -36,7 +36,7 @@ app.get("/", async (_, res) => {
 		}
 	}
 
-	const [errFetchRes, fetchRes] = await to(
+	const [errFetchResPeriods, fetchResPeriods] = await to(
 		fetch(
 			`https://api.meteo-concept.com/api/forecast/daily/periods?insee=${INSEE}`,
 			{
@@ -48,25 +48,56 @@ app.get("/", async (_, res) => {
 		),
 	)
 
-	if (errFetchRes) {
-		console.error(errFetchRes)
+	if (errFetchResPeriods) {
+		console.error(errFetchResPeriods)
 		res.status(500).send("Error while fetching data")
 		return
 	}
 
-	const [errJson, json] = await to(fetchRes.json())
-	if (errJson) {
-		console.error(errJson)
+	const [errJsonPeriods, jsonPeriods] = await to(fetchResPeriods.json())
+	if (errJsonPeriods) {
+		console.error(errJsonPeriods)
 		res.status(500).send("Error while parsing data")
 		return
 	}
 
-	cache = {
-		timestamp: Date.now(),
-		data: json,
+	const [errFetchResHours, fetchResHours] = await to(
+		fetch(
+			`https://api.meteo-concept.com/api/forecast/daily/nextHours?insee=${INSEE}`,
+			{
+				method: "GET",
+				headers: {
+					Authorization: `Bearer ${env.API_KEY}`,
+				},
+			},
+		),
+	)
+
+	if (errFetchResHours) {
+		console.error(errFetchResHours)
+		res.status(500).send("Error while fetching data")
+		return
 	}
 
-	res.status(200).json(json)
+	const [errJsonHours, jsonHours] = await to(fetchResHours.json())
+
+	if (errJsonHours) {
+		console.error(errJsonHours)
+		res.status(500).send("Error while parsing data")
+		return
+	}
+
+	const data = {
+		periods: jsonPeriods,
+		hours: jsonHours,
+	}
+
+	cache = {
+		timestamp: Date.now(),
+		data,
+	}
+
+	res.status(200).json(jsonPeriods)
 })
 
 app.listen(env.PORT, () => {
