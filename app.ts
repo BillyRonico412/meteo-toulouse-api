@@ -63,7 +63,7 @@ app.get("/", async (_, res) => {
 
 	const [errFetchResHours, fetchResHours] = await to(
 		fetch(
-			`https://api.meteo-concept.com/api/forecast/daily/nextHours?insee=${INSEE}`,
+			`https://api.meteo-concept.com/api/forecast/nextHours?insee=${INSEE}`,
 			{
 				method: "GET",
 				headers: {
