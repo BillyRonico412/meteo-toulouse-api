@@ -97,7 +97,7 @@ app.get("/", async (_, res) => {
 		data,
 	}
 
-	res.status(200).json(jsonPeriods)
+	res.status(200).json(data)
 })
 
 app.listen(env.PORT, () => {
