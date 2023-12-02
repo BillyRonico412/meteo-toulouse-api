@@ -17,4 +17,4 @@ jobs:
             sudo docker stop meteo-toulouse-api || true && sudo docker rm meteo-toulouse-api || true
             cd ./server
             sudo docker image build -t meteo-toulouse-api .
-            sudo docker container run --name meteo-toulouse-api -d -p ${{ secrets.PORT }}:3000 -v /root/meteo-toulouse-api/.env:/app/.env meteo-toulouse-api
+            sudo docker container run --name meteo-toulouse-api -d -p ${{ secrets.PORT }}:3000 -v /home/debian/meteo-toulouse-api/.env:/app/.env meteo-toulouse-api
